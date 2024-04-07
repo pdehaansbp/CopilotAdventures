@@ -1,6 +1,8 @@
 import random
 import time
+from typing import Generator
 from enum import Enum
+
 
 class Move(Enum):
     TWIRL = 1
@@ -8,7 +10,7 @@ class Move(Enum):
     SPIN = 3
 
 
-def random_moves_generator(n=3):
+def random_moves_generator(n: int = 3) -> Generator[tuple[Move, ...], None, None]:
     """
     Generates a sequence of random moves.
 
@@ -24,7 +26,8 @@ def random_moves_generator(n=3):
         yield tuple(random.choice(moves) for _ in range(n))
         time.sleep(1)
 
-def get_magical_effect(moves):
+
+def get_magical_effect(moves: tuple[Move, ...]) -> str:
     """
     Determines the magical effect based on the given sequence of moves.
 
@@ -58,7 +61,18 @@ def get_magical_effect(moves):
     else:
         return "No magical effect"
 
-def update_forest_state(effect):
+
+def update_forest_state(effect: str) -> str:
+    """
+    Update the state of the forest based on the given effect.
+
+    Parameters:
+    effect (str): The effect that occurs in the forest.
+
+    Returns:
+    str: The updated state of the forest.
+
+    """
     if effect == "Fireflies light up the forest":
         return "Forest is bright"
     elif effect == "Gentle rain starts falling":
@@ -83,6 +97,20 @@ def update_forest_state(effect):
         return "Forest is normal"
 
 def simulate_dance():
+    """
+    Simulates a dance between two creatures and prints the effects and forest state after each sequence.
+
+    This function generates random moves for each creature and applies a magical effect to the forest state
+    based on the moves. It then prints the moves and the resulting effect, as well as the updated forest state.
+
+    Note: The `random_moves_generator` and `get_magical_effect` functions are assumed to be defined elsewhere.
+
+    Example:
+        Creature moves: TWIRL, LEAP, which caused the following effect: Magical Sparkles
+        Sequence 1: Forest is filled with Magical Sparkles
+        Creature moves: SPIN, TWIRL, which caused the following effect: Enchanted Whispers
+        Sequence 2: Forest is filled with Enchanted Whispers
+    """
     # lox_moves = [Move.TWIRL, Move.LEAP, Move.SPIN, Move.TWIRL, Move.LEAP]
     # drako_moves = [Move.SPIN, Move.TWIRL, Move.LEAP, Move.LEAP, Move.SPIN]
     for i, moves in enumerate(random_moves_generator(n=2)):
